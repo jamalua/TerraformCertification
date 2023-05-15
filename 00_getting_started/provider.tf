@@ -1,4 +1,5 @@
 provider "aws" {
-  # profile = "it-sandbox"
+  profile = "it-sandbox"
   region  = "eu-west-1"
+
 }
