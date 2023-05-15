@@ -3,3 +3,5 @@
 
 # Terraform executable
 terraform.exe
+.terraform*
+terraform*
