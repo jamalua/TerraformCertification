@@ -17,7 +17,7 @@ resource "aws_instance" "jamal_server" {
 
 resource "aws_security_group" "sg_jamal_server" {
   name        = "sg_jamal_server"
-  description = "Allow port 80 and ssh"
+  description = "Allow port 80 and ssh from SP"
   vpc_id      = data.aws_vpc.main.id
 
   ingress {
