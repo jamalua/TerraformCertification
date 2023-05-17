@@ -16,7 +16,7 @@ resource "aws_instance" "jamal_server" {
       type = "ssh"
       user = "ec2-user"
       host = self.public_ip
-      private_key = file("C:\\Users\\jamal.ahmed\\.ssh\\id_rsa")
+      private_key = file("C:/Users/jamal.ahmed/.ssh/id_rsa")
     }
     
   }
