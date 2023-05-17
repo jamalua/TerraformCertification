@@ -69,5 +69,5 @@ data "aws_vpc" "main" {
 }
 
 data "template_file" "user_data" {
-  template = file(".\\userdata.yml")
+  template = file("./userdata.yml")
 }
