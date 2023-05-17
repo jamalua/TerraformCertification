@@ -4,23 +4,11 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "aws_instance" "jamal_server" {
-  ami           = "ami-09fd16644beea3565"
-  instance_type = var.instance_type
-  key_name = aws_key_pair.deployer.key_name
+  ami                    = "ami-09fd16644beea3565"
+  instance_type          = var.instance_type
+  key_name               = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_security_group.sg_jamal_server.id]
-  user_data = data.template_file.user_data.rendered
-  provisioner "file" {
-    content = "mars"
-    destination = "/home/ec2-user/barsoon.txt"
-    connection {
-      type = "ssh"
-      user = "ec2-user"
-      host = self.public_ip
-      private_key = file("id_rsa")
-    }
-    
-  }
-
+  user_data              = data.template_file.user_data.rendered
   tags = {
     Name = "jamal-server"
   }
