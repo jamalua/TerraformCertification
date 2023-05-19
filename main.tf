@@ -13,6 +13,16 @@ resource "aws_instance" "jamal_server" {
     Name = "jamal-server"
   }
 
+  provisioner "remote-exec" {
+    inline = ["echo \"maes\" >> /home/ec2/barsoon.txt"]
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      host        = self.public_ip
+      private_key = var.pri_key
+    }
+  }
+
 }
 
 resource "aws_security_group" "sg_jamal_server" {
