@@ -4,23 +4,20 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "aws_instance" "jamal_server" {
+  for_each = {
+    nano  = "t2.nano"
+    micro = "t2.micro"
+    small = "t2.nano"
+  }
+
   ami                    = "ami-09fd16644beea3565"
-  instance_type          = var.instance_type
+  instance_type          = each.value
   key_name               = "jamal-test-keypair"
   vpc_security_group_ids = [aws_security_group.sg_jamal_server.id]
   user_data              = data.template_file.user_data.rendered
-  tags = {
-    Name = "jamal-server"
-  }
 
-  provisioner "remote-exec" {
-    inline = ["echo \"maes\" >> /home/ec2/barsoon.txt"]
-    connection {
-      type        = "ssh"
-      user        = "ec2-user"
-      host        = self.public_ip
-      private_key = var.pri_key
-    }
+  tags = {
+    Name = join("-", ["jamal-server", each.key])
   }
 
 }
@@ -59,6 +56,11 @@ resource "aws_security_group" "sg_jamal_server" {
   tags = {
     Name = "sg_jamal_server"
   }
+}
+
+resource "aws_s3_bucket" "depends_on_bucket" {
+  bucket     = "jamal-depends-on-bucket-s3"
+  depends_on = [aws_instance.jamal_server]
 }
 
 
