@@ -4,15 +4,15 @@ provider "aws" {
 }
 
 variable "elb_names" {
-    type = list
-    default = ["dev_loadblancer", "stage_loadbalancer", "prod_loadbalancer"]
+  type    = list(any)
+  default = ["dev_loadblancer", "stage_loadbalancer", "prod_loadbalancer"]
 }
 
 
 resource "aws_instance" "jamal-ec2" {
   instance_type = "t2.micro"
   ami           = "ami-00b1c9efd33fda707"
-  count = 3
+  count         = 3
 
   tags = {
     Name = var.elb_names[count.index]
@@ -21,6 +21,6 @@ resource "aws_instance" "jamal-ec2" {
 
 
 output "instances" {
-    value = aws_instance.jamal-ec2[*].id
-  
+  value = aws_instance.jamal-ec2[*].id
+
 }
