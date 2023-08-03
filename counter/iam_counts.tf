@@ -21,6 +21,6 @@ resource "aws_instance" "jamal-ec2" {
 
 
 output "instances" {
-    value = aws_instance.jamal-ec2.1.id
+    value = aws_instance.jamal-ec2[*].id
   
 }
